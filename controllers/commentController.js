@@ -46,11 +46,18 @@ router.route("/rotter2").get( async (req,res) =>{
   })
 
 
-
-
-   const decodeGI =(str) =>{
-    return decodeURIComponent(str.replace(/\+/g,  " "));
-}
+  router.route('/m3u').get(async (req, res) => {
+    try {
+      const url = 'https://ideorpo.alwaysdata.net/kmb.php';
+      const response = await axios.get(url);
+  
+      console.log(response.data); // Log the M3U8 file data
+      res.send(response.data); // Send the M3U8 file data as the response
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
 
 
 String.prototype.replaceArray = function(find, replace) {
