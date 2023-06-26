@@ -52,8 +52,8 @@ router.route("/rotter2").get( async (req,res) =>{
       const response = await axios.get(url);
   
       // Set the proper headers to indicate that the response is an M3U8 file
-      //res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
-      //res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Content-Type', 'text/plain');
+      res.setHeader('Access-Control-Allow-Origin', '*');
   
       // Split the response data into lines, then join them back together with newline characters
       const lines = response.data.split('\n');
