@@ -55,13 +55,18 @@ router.route("/rotter2").get( async (req,res) =>{
       res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
       res.setHeader('Access-Control-Allow-Origin', '*');
   
+      // Split the response data into lines, then join them back together with newline characters
+      const lines = response.data.split('\n');
+      const formattedData = lines.join('\n');
+  
       // Send the response data from the original source with the preserved line breaks
-      res.send(response.data);
+      res.send(formattedData);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
   });
+  
 
 
 String.prototype.replaceArray = function(find, replace) {
