@@ -52,6 +52,13 @@ router.route("/rotter2").get( async (req,res) =>{
     target: 'https://ideorpo.alwaysdata.net/kmb.php?',
     changeOrigin: true,
     secure: false,
+    onProxyRes: (proxyRes, req, res) => {
+      // Set headers on the response to the client
+      res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+    },
     onProxyReq: (proxyReq) => {
       // Set headers on the request to the remote server
       proxyReq.setHeader('Referer', 'https://www.google.com/');
