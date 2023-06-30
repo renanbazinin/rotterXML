@@ -50,24 +50,24 @@ router.route("/rotter2").get( async (req,res) =>{
     try {
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
       const response = await axios.get(url);
-
-      const baseURL = 'https://ideorpo.alwaysdata.net/kmb.php?';
-
+  
       // Set the proper headers to indicate that the response is an M3U8 file
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Access-Control-Allow-Origin', '*');
   
-      // Split the response data into lines
+      // Split the response data into lines, then join them back together with newline characters
       const lines = response.data.split('\n');
   
-      // Join them back together with newline characters and add the base URL to each segment path
-      const formattedData = lines.map(line => {
-        if (line.startsWith('hdntl')) {
-          return baseURL + line;
+      const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
+      
+      for(let i = 0; i < lines.length; i++) {
+        if(lines[i].includes('hdntl')) {
+          lines[i] = baseUrl + lines[i];
         }
-        return line;
-      }).join('\n');
-  
+      }
+      
+      const formattedData = lines.join('\n');
+    
       // Send the response data from the original source with the preserved line breaks
       res.send(formattedData);
     } catch (error) {
@@ -75,6 +75,7 @@ router.route("/rotter2").get( async (req,res) =>{
       res.status(500).send('Internal Server Error');
     }
   });
+  
   
 
 
