@@ -47,7 +47,7 @@ router.route("/rotter2").get( async (req,res) =>{
   })
 
   
-
+/*
   router.route('/m3u').get(async (req, res) => {
     const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
     const originalUrl = req.originalUrl.replace('/m3u', '');
@@ -55,8 +55,16 @@ router.route("/rotter2").get( async (req,res) =>{
   
     res.redirect(newUrl);
   });
-  
-  
+  */
+  app.use('/m3u', createProxyMiddleware({
+    target: 'https://ideorpo.alwaysdata.net',
+    changeOrigin: true,
+    secure: false,
+    onProxyRes: (proxyRes, req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    },
+  }));
 
 
 String.prototype.replaceArray = function(find, replace) {
