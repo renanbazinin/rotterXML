@@ -48,18 +48,22 @@ router.route("/rotter2").get( async (req,res) =>{
   })
 
   
-
   router.use('/m3u', createProxyMiddleware({
     target: 'https://ideorpo.alwaysdata.net/kmb.php?',
     changeOrigin: true,
     secure: false,
+    onProxyReq: (proxyReq) => {
+      // Set headers on the request to the remote server
+      proxyReq.setHeader('Referer', 'https://www.mako.co.il/mako-vod-live-tv/VOD-6540b8dcb64fd31006.htm');
+      proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3');
+    },
     onProxyRes: (proxyRes, req, res) => {
+      // Set headers on the response to the client
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     },
   }));
   
-
 
 String.prototype.replaceArray = function(find, replace) {
   var chacking = ""
