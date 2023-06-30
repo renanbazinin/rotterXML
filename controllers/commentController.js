@@ -50,14 +50,23 @@ router.route("/rotter2").get( async (req,res) =>{
     try {
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
       const response = await axios.get(url);
-  
+
+      const baseURL = 'https://mako-streaming.akamaized.net/direct/hls/live/2033791/k12dvr/';
+
       // Set the proper headers to indicate that the response is an M3U8 file
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Access-Control-Allow-Origin', '*');
   
-      // Split the response data into lines, then join them back together with newline characters
+      // Split the response data into lines
       const lines = response.data.split('\n');
-      const formattedData = lines.join('\n');
+  
+      // Join them back together with newline characters and add the base URL to each segment path
+      const formattedData = lines.map(line => {
+        if (line.startsWith('hdntl')) {
+          return baseURL + line;
+        }
+        return line;
+      }).join('\n');
   
       // Send the response data from the original source with the preserved line breaks
       res.send(formattedData);
