@@ -56,9 +56,7 @@ router.route("/rotter2").get( async (req,res) =>{
       // Set the proper headers to indicate that the response is an M3U8 file
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
+  
       // Split the response data into lines
       const lines = response.data.split('\n');
   
@@ -71,18 +69,8 @@ router.route("/rotter2").get( async (req,res) =>{
         }
       });
   
-      const { data } = await axios.get(lastM3U8Url, {
-        responseType: 'stream'
-      });
-    
-      // Save the .m3u8 file to your server
-      const writer = fs.createWriteStream(path.resolve(__dirname, 'file.m3u8'));
-      data.pipe(writer);
-    
-      writer.on('finish', () => {
-        // Serve the saved .m3u8 file as a static file
-        res.sendFile(path.resolve(__dirname, 'file.m3u8'));
-      });
+      // send only the last m3u8 url
+      res.send(lastM3U8Url);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
