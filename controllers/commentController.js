@@ -59,7 +59,7 @@ router.route("/rotter2").get( async (req,res) =>{
     },
     onProxyRes: (proxyRes, req, res) => {
       // Set headers on the response to the client
-      res.setHeader('Access-Control-Allow-Origin', 'http://mobile.mako.co.il');
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     },
   }));
