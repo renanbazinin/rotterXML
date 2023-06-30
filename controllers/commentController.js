@@ -51,26 +51,14 @@ router.route("/rotter2").get( async (req,res) =>{
   router.route('/m3u').get(async (req, res) => {
     try {
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
-      const response = await axios.get(url);
+      const response = await axios.get(url, { responseType: 'arraybuffer' });
   
       // Set the proper headers to indicate that the response is an M3U8 file
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.set('Content-Type', 'application/vnd.apple.mpegurl');
+      res.set('Access-Control-Allow-Origin', '*');
+      res.set('Access-Control-Allow-Headers', 'Content-Type');
   
-      // Split the response data into lines
-      const lines = response.data.split('\n');
-  
-      const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
-      let lastM3U8Url = '';
-  
-      lines.forEach(line => {
-        if(line.includes('.m3u8')) {
-          lastM3U8Url = baseUrl + line.trim(); // store the last m3u8 url and prepend the baseUrl
-        }
-      });
-  
-      // send only the last m3u8 url
-      res.send(lastM3U8Url);
+      res.send(response.data);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
