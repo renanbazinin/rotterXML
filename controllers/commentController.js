@@ -50,7 +50,7 @@ router.route("/rotter2").get( async (req,res) =>{
   
 
   router.use('/m3u', createProxyMiddleware({
-    target: 'https://ideorpo.alwaysdata.net',
+    target: 'https://ideorpo.alwaysdata.net/kmb.php?',
     changeOrigin: true,
     secure: false,
     onProxyRes: (proxyRes, req, res) => {
