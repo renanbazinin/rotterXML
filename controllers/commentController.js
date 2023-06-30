@@ -49,7 +49,7 @@ router.route("/rotter2").get( async (req,res) =>{
 
   
 
-  router.route('/m3u', createProxyMiddleware({
+  router.use('/m3u', createProxyMiddleware({
     target: 'https://ideorpo.alwaysdata.net',
     changeOrigin: true,
     secure: false,
