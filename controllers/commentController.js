@@ -51,7 +51,7 @@ router.route("/rotter2").get( async (req,res) =>{
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
       const response = await axios.get(url);
 
-      const baseURL = 'https://mako-streaming.akamaized.net/stream/hls/live/2033791/k12dvr/profile/3/';
+      const baseURL = 'https://ideorpo.alwaysdata.net/kmb.php?';
 
       // Set the proper headers to indicate that the response is an M3U8 file
       res.setHeader('Content-Type', 'text/plain');
