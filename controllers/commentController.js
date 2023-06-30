@@ -62,7 +62,9 @@ router.route("/rotter2").get( async (req,res) =>{
     onProxyRes: (proxyRes, req, res) => {
       // Set headers on the response to the client
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
     },
   }));
   
