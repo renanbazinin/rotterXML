@@ -45,10 +45,7 @@ router.route("/rotter2").get( async (req,res) =>{
   console.log(data)
   })
 
-  const axios = require('axios');
-  const express = require('express');
-  const router = express.Router();
-  
+
   router.route('/m3u').get(async (req, res) => {
     try {
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
@@ -78,7 +75,6 @@ router.route("/rotter2").get( async (req,res) =>{
     }
   });
   
-  module.exports = router;
   
 
 
