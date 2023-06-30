@@ -56,6 +56,8 @@ router.route("/rotter2").get( async (req,res) =>{
       // Set headers on the request to the remote server
       proxyReq.setHeader('Referer', 'https://www.google.com/');
       proxyReq.setHeader('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36');
+      proxyReq.setHeader('origin', 'https://www.google.com/');
+      proxyReq.setHeader('range', 'bytes=0-')
     },
     onProxyRes: (proxyRes, req, res) => {
       // Set headers on the response to the client
