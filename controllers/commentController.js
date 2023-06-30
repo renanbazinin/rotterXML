@@ -45,7 +45,10 @@ router.route("/rotter2").get( async (req,res) =>{
   console.log(data)
   })
 
-
+  const axios = require('axios');
+  const express = require('express');
+  const router = express.Router();
+  
   router.route('/m3u').get(async (req, res) => {
     try {
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
@@ -58,11 +61,12 @@ router.route("/rotter2").get( async (req,res) =>{
       // Split the response data into lines
       const lines = response.data.split('\n');
   
+      const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
       let lastM3U8Url = '';
-      
+  
       lines.forEach(line => {
         if(line.includes('.m3u8')) {
-          lastM3U8Url = line; // store the last m3u8 url
+          lastM3U8Url = baseUrl + line.trim(); // store the last m3u8 url and prepend the baseUrl
         }
       });
   
@@ -74,6 +78,7 @@ router.route("/rotter2").get( async (req,res) =>{
     }
   });
   
+  module.exports = router;
   
 
 
