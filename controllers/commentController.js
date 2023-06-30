@@ -55,21 +55,19 @@ router.route("/rotter2").get( async (req,res) =>{
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Access-Control-Allow-Origin', '*');
   
-      // Split the response data into lines, then join them back together with newline characters
+      // Split the response data into lines
       const lines = response.data.split('\n');
   
-      const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
+      let lastM3U8Url = '';
       
-      for(let i = 0; i < lines.length; i++) {
-        if(lines[i].includes('hdntl')) {
-          lines[i] = baseUrl + lines[i];
+      lines.forEach(line => {
+        if(line.includes('.m3u8')) {
+          lastM3U8Url = line; // store the last m3u8 url
         }
-      }
-      
-      const formattedData = lines.join('\n');
-    
-      // Send the response data from the original source with the preserved line breaks
-      res.send(formattedData);
+      });
+  
+      // send only the last m3u8 url
+      res.send(lastM3U8Url);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
