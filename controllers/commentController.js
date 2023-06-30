@@ -54,23 +54,28 @@ router.route("/rotter2").get( async (req,res) =>{
       // Split the response data into lines
       const lines = response.data.split('\n');
       
-      // Initialize an empty string to hold the last URL
+      // Initialize an empty string to hold the last two lines
+      let lastStreamInfo = '';
       let lastUrl = '';
   
       for(let i = 0; i < lines.length; i++) {
-        if(lines[i].startsWith('https://ideorpo.alwaysdata.net/kmb.php')) {
-          // Store the current line in lastUrl
-          lastUrl = lines[i];
+        if(lines[i].startsWith('#EXT-X-STREAM-INF')) {
+          // If the next line starts with the desired url, store both lines
+          if(lines[i+1] && lines[i+1].startsWith('https://ideorpo.alwaysdata.net/kmb.php')) {
+            lastStreamInfo = lines[i];
+            lastUrl = lines[i+1];
+          }
         }
       }
   
-      // Send the last URL with highest resolution
-      res.send(lastUrl);
+      // Send the last two lines with highest resolution
+      res.send(`${lastStreamInfo}\n${lastUrl}`);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
   });
+  
   
   
 
