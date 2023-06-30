@@ -51,25 +51,21 @@ router.route("/rotter2").get( async (req,res) =>{
       const url = 'https://ideorpo.alwaysdata.net/kmb.php';
       const response = await axios.get(url);
   
-      // Set the proper headers to indicate that the response is an M3U8 file
-      res.setHeader('Content-Type', 'text/plain');
-      res.setHeader('Access-Control-Allow-Origin', '*');
-  
-      // Split the response data into lines, then join them back together with newline characters
+      // Split the response data into lines
       const lines = response.data.split('\n');
-  
-      const baseUrl = 'https://ideorpo.alwaysdata.net/kmb.php?';
       
+      // Initialize an empty string to hold the last URL
+      let lastUrl = '';
+  
       for(let i = 0; i < lines.length; i++) {
-        if(lines[i].includes('hdntl')) {
-          lines[i] = baseUrl + lines[i];
+        if(lines[i].startsWith('https://ideorpo.alwaysdata.net/kmb.php')) {
+          // Store the current line in lastUrl
+          lastUrl = lines[i];
         }
       }
-      
-      const formattedData = lines.join('\n');
-    
-      // Send the response data from the original source with the preserved line breaks
-      res.send(formattedData);
+  
+      // Send the last URL with highest resolution
+      res.send(lastUrl);
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
