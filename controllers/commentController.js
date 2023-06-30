@@ -55,7 +55,9 @@ router.route("/rotter2").get( async (req,res) =>{
       // Set the proper headers to indicate that the response is an M3U8 file
       res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Access-Control-Allow-Origin', '*');
-  
+      res.setHeader('Access-Control-Allow-Methods', 'GET');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
       // Split the response data into lines
       const lines = response.data.split('\n');
   
