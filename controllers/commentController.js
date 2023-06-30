@@ -70,8 +70,18 @@ router.route("/rotter2").get( async (req,res) =>{
         }
       });
   
-      // send only the last m3u8 url
-      res.send(lastM3U8Url);
+      const { data } = await axios.get(lastM3U8Url, {
+        responseType: 'stream'
+      });
+    
+      // Save the .m3u8 file to your server
+      const writer = fs.createWriteStream(path.resolve(__dirname, 'file.m3u8'));
+      data.pipe(writer);
+    
+      writer.on('finish', () => {
+        // Serve the saved .m3u8 file as a static file
+        res.sendFile(path.resolve(__dirname, 'file.m3u8'));
+      });
     } catch (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
