@@ -49,7 +49,7 @@ router.route("/rotter2").get( async (req,res) =>{
 
   
   router.use('/m3u', createProxyMiddleware({
-    target: 'https://ideorpo.alwaysdata.net/kmb.php?',
+    target: 'https://repe-depo.000webhostapp.com/kmk.php?',
     changeOrigin: true,
     secure: false,
 
